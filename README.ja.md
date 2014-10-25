@@ -188,4 +188,4 @@ shhelp-gen [-j] <string>
 ```
 
 ##更新履歴
-[README.md](https://github.com/minanon/functions.bash/README.md)を参照してください。
+[README.md](https://github.com/minanon/functions.shell/blob/master/README.md#changelog)を参照してください。
