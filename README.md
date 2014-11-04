@@ -11,6 +11,8 @@ License: {{{}}}
 - Install
 - Usage
 - Functions
+  - parse_echo_param()
+  - parse_echo_string()
   - error()
   - warn()
   - inf()
@@ -39,11 +41,39 @@ Please install from github.
 ```
 
 ##Functions
+###parse_echo_param()
+get param for "echo" from param
+
+####Parameter
+- parameters ..
+
+####return
+option params
+
+####Usage	parse_echo_param()
+```shell-session
+parse_echo_param <mixed>
+```
+
+###parse_echo_string()
+get string for "echo" from param
+
+####Parameter
+- parameters ..
+
+####return
+string params
+
+####Usage	parse_echo_string()
+```shell-session
+parse_echo_string <mixed>
+```
+
 ###error()
 output red color string to stderr
 
-- Parameter
-  - message .. output this messages
+####Parameter
+- message .. output this messages
 
 ####Usage	error()
 ```shell-session
@@ -53,8 +83,8 @@ error <string>
 ###warn()
 output yellow color string to stderr
 
-- Parameter
-  - message .. output this messages
+####Parameter
+- message .. output this messages
 
 ####Usage	warn()
 ```shell-session
@@ -64,8 +94,8 @@ warn <string>
 ###inf()
 output blue color string to stderr
 
-- Parameter
-  - message .. output this messages
+####Parameter
+- message .. output this messages
 
 ####Usage	inf()
 ```shell-session
@@ -75,8 +105,8 @@ inf <string>
 ###msg()
 output to stdout
 
-- Parameter
-  - message .. output this messages
+####Parameter
+- message .. output this messages
 
 ####Usage	msg()
 ```shell-session
@@ -86,8 +116,8 @@ msg <string>
 ###comp()
 output green color to stdout
 
-- Parameter
-  - message .. output this messages
+####Parameter
+- message .. output this messages
 
 ####Usage	comp()
 ```shell-session
@@ -97,18 +127,18 @@ comp <string>
 ###decorate_string()
 decorate string
 
-- Parameter
-  - -b bold
-  - -s line-through
-  - -u underline
-  - -l blink
-  - -r reverse color
-  - -n disable decoration
-  - -c {color_code} string color
-  - -g {color_code} background color
-  - -o return decorated string(default)
-  - -O return escaped string
-  - message .. output this messages
+####Parameter
+- -b bold
+- -s line-through
+- -u underline
+- -l blink
+- -r reverse color
+- -n disable decoration
+- -c {color_code} string color
+- -g {color_code} background color
+- -o return decorated string(default)
+- -O return escaped string
+- message .. output this messages
 
 ####color code:(number or name)  
 |for font|for background|color name|  
@@ -130,8 +160,8 @@ decorate_string [-bsulrnoO] [-c {color_code}] [-g {color_code}] <string>
 ###truncate_string()
 truncate the character protruding from the window
 
-- Parameter
-  - truncate string
+####Parameter
+- truncate string
 
 ####Usage	truncate_string()
 ```shell-session
@@ -141,8 +171,8 @@ truncate_string <string>
 ###centering()
 centering string
 
-- Parameter
-  - centering align string
+####Parameter
+- centering align string
 
 ####Usage	centering()
 ```shell-session
@@ -152,8 +182,8 @@ centering <string>
 ###right_align()
 right align string
 
-- Parameter
-  - right align string
+####Parameter
+- right align string
 
 ####Usage	right_align()
 ```shell-session
@@ -163,13 +193,13 @@ right_align <string>
 ###hr()
 Horizontal Rule
 
-- Parameter
-  - -c centering
-  - -r right align
-  - -t truncate the character protruding from the window(default)
-  - -T NOT truncate the character protruding from the window
-  - -n {repeat_count} repeat count(default: 20)
-  - -s {line_string} line string(default: '-')
+####Parameter
+- -c centering
+- -r right align
+- -t truncate the character protruding from the window(default)
+- -T NOT truncate the character protruding from the window
+- -n {repeat_count} repeat count(default: 20)
+- -s {line_string} line string(default: '-')
 
 ####Usage	hr()
 ```shell-session
@@ -179,9 +209,9 @@ hr [-crtT] [-n {repeat_count}] [-s {line_string}]
 ###shhelp-gen()
 generate shell for README.md
 
-- Parameter
-  - -j japanese
-  - shell script filepath
+####Parameter
+- -j japanese
+- shell script filepath
 
 ####Usage	shhelp-gen()
 ```shell-session

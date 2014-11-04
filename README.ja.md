@@ -11,6 +11,8 @@ License: {{{}}}
 - インストール
 - 使用方法
 - 関数
+  - parse_echo_param()
+  - parse_echo_string()
   - error()
   - warn()
   - inf()
@@ -39,11 +41,39 @@ GitHubから取得してください。
 ```
 
 ##関数
+###parse_echo_param()
+echo 用のパラメータをパースし、オプションのみを返します。
+
+####引数
+- parameters ..
+
+####戻り値
+option パラメーター
+
+####使用方法	parse_echo_param()
+```shell-session
+parse_echo_param <mixed>
+```
+
+###parse_echo_string()
+echo 用のパラメータをパースし、文字列部分のみを返します。
+
+####引数
+- parameters ..
+
+####戻り値
+string params
+
+####使用方法	parse_echo_string()
+```shell-session
+parse_echo_string <mixed>
+```
+
 ###error()
 引数にある文字列を赤色にし、標準エラー出力します。
 
-- 引数
-  - <文字列> エラー出力する文字列
+####引数
+- <文字列> エラー出力する文字列
 
 ####使用方法	error()
 ```shell-session
@@ -52,8 +82,9 @@ error <string>
 
 ###warn()
 引数にある文字列を黄色にし、標準エラー出力します。
-- 引数
-  - <文字列> ワーニング出力する文字列
+
+####引数
+- <文字列> ワーニング出力する文字列
 
 ####使用方法	warn()
 ```shell-session
@@ -63,8 +94,8 @@ warn <string>
 ###inf()
 引数にある文字列を青色にし、標準エラー出力します。
 
-- 引数
-  - <文字列> 情報出力する文字列
+####引数
+- <文字列> 情報出力する文字列
 
 ####使用方法	inf()
 ```shell-session
@@ -74,8 +105,8 @@ inf <string>
 ###msg()
 引数にある文字列を、標準出力します。
 
-- 引数
-  - <文字列> 出力する文字列
+####引数
+- <文字列> 出力する文字列
 
 ####使用方法	msg()
 ```shell-session
@@ -85,8 +116,8 @@ msg <string>
 ###comp()
 引数にある文字列を緑色にし、標準出力します。
 
-- 引数
-  - <文字列> 出力する文字列
+####引数
+- <文字列> 出力する文字列
 
 ####使用方法	comp()
 ```shell-session
@@ -96,18 +127,18 @@ comp <string>
 ###decorate_string()
 文字列の装飾を行います。
 
-- 引数
-  - -b ボールド
-  - -s 取消線
-  - -u アンダーライン
-  - -l 点滅
-  - -r 文字色と背景色を入れ替える
-  - -n 装飾を無効化
-  - -c {color_code} 文字色
-  - -g {color_code} 背景色
-  - -o 装飾済み文字を返す
-  - -O 装飾コード付き文字を返す
-  - <文字列> 装飾対象の文字列
+####引数
+- -b ボールド
+- -s 取消線
+- -u アンダーライン
+- -l 点滅
+- -r 文字色と背景色を入れ替える
+- -n 装飾を無効化
+- -c {color_code} 文字色
+- -g {color_code} 背景色
+- -o 装飾済み文字を返す
+- -O 装飾コード付き文字を返す
+- <文字列> 装飾対象の文字列
 
 ####color code:(number or name)  
 |文字色コード|背景色コード|色名    |
@@ -129,8 +160,8 @@ decorate_string [-bsulrnoO] [-c {color_code}] [-g {color_code}] <string>
 ###truncate_string()
 文字列が画面の幅を超える時に、はみ出す分を切り捨てます。
 
-- 引数
-  - <文字列> トランケートする文字列
+####引数
+- <文字列> トランケートする文字列
 
 ####使用方法	truncate_string()
 ```shell-session
@@ -140,8 +171,8 @@ truncate_string <string>
 ###centering()
 文字列を画面中央に寄せます。
 
-- 引数
-  - <文字列> 中央寄せする文字列
+####引数
+- <文字列> 中央寄せする文字列
 
 ####使用方法	centering()
 ```shell-session
@@ -151,8 +182,8 @@ centering <string>
 ###right_align()
 文字列を画面右寄せします。
 
-- 引数
-  - <文字列> 右寄せする文字列
+####引数
+- <文字列> 右寄せする文字列
 
 ####使用方法	right_align()
 ```shell-session
@@ -162,13 +193,13 @@ right_align <string>
 ###hr()
 区切り線を表示します。
 
-- 引数
-  - -c 中央寄せ
-  - -r 右寄せ
-  - -t 画面からはみ出す区切り線を切り捨てる(default)
-  - -T 画面からはみ出す場合も表示する
-  - -n {repeat_count} 繰り返し回数(default: 20)
-  - -s {line_string} 区切り文字(default: '-')
+####引数
+- -c 中央寄せ
+- -r 右寄せ
+- -t 画面からはみ出す区切り線を切り捨てる(default)
+- -T 画面からはみ出す場合も表示する
+- -n {repeat_count} 繰り返し回数(default: 20)
+- -s {line_string} 区切り文字(default: '-')
 
 ####使用方法	hr()
 ```shell-session
@@ -178,9 +209,9 @@ hr [-crtT] [-n {repeat_count}] [-s {line_string}]
 ###shhelp-gen()
 generate shell for README.md
 
-- 引数
-  - -j japanese
-  - shell script filepath
+####引数
+- -j japanese
+- shell script filepath
 
 ####使用方法	shhelp-gen()
 ```shell-session

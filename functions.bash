@@ -15,12 +15,64 @@
 # . functions.bash #in your bash script
 
 ##
+# get param for "echo" from param
+#
+# param mixed parameters ..
+# return string option params
+parse_echo_param()
+{
+    local param=""
+    for p in "${@}"
+    do
+        case "${p}" in
+            "-"*)
+                param+=${p/-/}
+                ;;
+        esac
+    done
+
+    if [ "${param}" ]
+    then
+        echo "-${param} "
+    fi
+
+}
+
+##
+# get string for "echo" from param
+#
+# param mixed parameters ..
+# return string string params
+parse_echo_string()
+{
+    local str=""
+    for p in "${@}"
+    do
+        case "${p}" in
+            "-"*)
+                ;;
+            *)
+                if [ "${str}" ]
+                then
+                    str+=" "
+                fi
+                str+="${p}"
+                ;;
+        esac
+    done
+
+    echo "${str}"
+}
+
+##
 # output red color string to stderr
 #
 # param string message .. output this messages
 error()
 {
-    echo $(decorate_string -c red "${@}") 1>&2
+    params=$(parse_echo_param "${@}")
+    str=$(parse_echo_string "${@}")
+    echo ${params} $(decorate_string -c red "${str}") 1>&2
 }
 ##
 # output yellow color string to stderr
@@ -28,7 +80,9 @@ error()
 # param string message .. output this messages
 warn()
 {
-    echo $(decorate_string -c yellow "${@}") 1>&2
+    params=$(parse_echo_param "${@}")
+    str=$(parse_echo_string "${@}")
+    echo ${params} $(decorate_string -c yellow "${str}") 1>&2
 }
 ##
 # output blue color string to stderr
@@ -36,7 +90,9 @@ warn()
 # param string message .. output this messages
 inf()
 {
-    echo $(decorate_string -b -c blue "${@}") 1>&2
+    params=$(parse_echo_param "${@}")
+    str=$(parse_echo_string "${@}")
+    echo ${params} $(decorate_string -c blue "${str}") 1>&2
 }
 
 ##
@@ -53,7 +109,9 @@ msg()
 # param string message .. output this messages
 comp()
 {
-    echo $(decorate_string -c green "${@}")
+    params=$(parse_echo_param "${@}")
+    str=$(parse_echo_string "${@}")
+    echo ${params} $(decorate_string -c green "${str}")
 }
 
 ##
@@ -352,15 +410,18 @@ shhelp-gen()
         desc         = ""
         params       = ""
         pparams      = ""
+        ret          = ""
 
         switch (lang) {
             case "en":
-                func_usage = "Usage"
-                func_param = "- Parameter"
+                func_usage  = "Usage"
+                func_param  = "####Parameter"
+                func_return = "####return"
                 break
             case "ja":
-                func_usage = "使用方法"
-                func_param = "- 引数"
+                func_usage  = "使用方法"
+                func_param  = "####引数"
+                func_return = "####戻り値"
                 break
         }
 
@@ -418,6 +479,9 @@ shhelp-gen()
             functions = functions "\n\n"
         }
         functions = functions "###" $0 desc
+        if (ret) {
+            functions = functions "\n\n" ret
+        }
         functions = functions "\n\n" "####" func_usage "\t" $0 "\n```shell-session\n"
         func_name = $0
         sub(/\(\)/, "", func_name)
@@ -446,6 +510,7 @@ shhelp-gen()
                     pparams = pparams " [-" substr($0, RSTART + 1, RLENGTH) "]"
                     break
                 case "string":
+                case "mixed":
                     string_param = string_param "<" param_type ">"
                     break
             }
@@ -454,9 +519,13 @@ shhelp-gen()
                 p1 = "1"
                 desc = "\n" desc "\n" func_param
             }
-            desc = desc "\n  - " $0
+            desc = desc "\n- " $0
         }
-        #else if (match($0, /^# *[^ ]+/)) {
+        else if (match($0, /^# *return/)) {
+            ret = $0
+            sub(/^# *return *[^ ]+ */, "", ret)
+            ret = func_return "\n" ret
+        }
         else {
             tmp = $0
             sub(/^# ?/, "", tmp)
@@ -468,7 +537,7 @@ shhelp-gen()
             desc = desc tmp
         }
     }
-    /^##/{type = "functions"; desc = ""; params = ""; pparams = ""; p1 = ""; string_param = ""; before = ""}
+    /^##/{type = "functions"; desc = ""; params = ""; pparams = ""; p1 = ""; string_param = ""; before = ""; ret = ""}
 
     END{
         gsub(/^\n+|\n+$/, "", intro)
