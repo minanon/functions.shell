@@ -1,7 +1,7 @@
-#functions.bash ver.1.0.0
+#functions.bash ver.1.1.0
 This is general bash script functions.
 
-Version: 1.0.0
+Version: 1.1.0
 Author : minanon
 License: {{{}}}
 

@@ -1,7 +1,7 @@
-#functions.bash ver.1.0.0
+#functions.bash ver.1.1.0
 よく使う汎用的なシェルスクリプト用関数群
 
-Version: 1.0.0
+Version: 1.1.0
 Author : minanon
 License: {{{}}}
 
