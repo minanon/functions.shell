@@ -604,3 +604,90 @@ shhelp-gen()
     (IFS=''; echo ${desc})
 
 }
+
+##
+# wait user input
+#
+# param string insert this var from inputted value
+# param string display input message
+# param string default selected value
+# param string(s) selectable values...
+# param switch -a allow empty
+# param switch -r receive all input(free input text)
+# param switch -i ignore case
+# param switch -l return lower case
+question(){
+    local var_name=""
+    local msg=""
+    local default=""
+    local reg=""
+    local allow_empty=false
+    local allow_all=false
+    local ignore_case=false
+    local lower_case=false
+    local cnt=0
+    for arg in "${@}"
+    do
+        case "${arg}" in
+            "-e")
+                allow_empty=true
+                continue
+                ;;
+            "-r")
+                allow_all=true
+                continue
+                ;;
+            "-i")
+                ignore_case=true
+                continue
+                ;;
+            "-l")
+                lower_case=true
+                continue
+                ;;
+        esac
+
+        case ${cnt} in
+            0)
+                var_name="${arg}"
+                ;;
+            1)
+                msg="${arg}"
+                ;;
+            2)
+                default="${arg}"
+                ;;
+            *)
+                reg+="${reg:+|}${arg}"
+                ;;
+        esac
+        cnt=$(( $cnt + 1 ))
+    done
+
+    to_lower(){
+        echo "${1}" | tr "[:upper:]" "[:lower:]"
+    }
+    set_to_var(){
+        ${lower_case} \
+            && eval "${var_name}='$( to_lower "${1}")'"\
+            || eval "${var_name}='${1}'"
+    }
+
+    $ignore_case && reg=$(to_lower "${reg}")
+
+    while true
+    do
+        msg -n "${msg}"$([ "${reg}" ] && echo " [${reg}]")$([ "${default}" ] && echo " (default: ${default})")": "; read -r answer
+
+        $ignore_case && answer=$(to_lower "${answer}")
+
+        if [ ! "${answer}" ]
+        then
+            [  "${default}" ] && { set_to_var "${default}"; break; }
+            ${allow_empty} && { set_to_var ''; break; }
+        fi
+        ${allow_all} && { set_to_var "${answer}"; break; }
+        [ "${reg}" ] && bash -c "[[ '${answer}' =~ ${reg} ]]" \
+            && { set_to_var "${answer}"; break; }
+    done
+}
