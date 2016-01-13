@@ -691,3 +691,38 @@ question(){
             && { set_to_var "${answer}"; break; }
     done
 }
+
+##
+# subcommand by file base
+#   subcommand name is file name
+#
+# param string directory within subcommand files
+# param string subcommand
+# param mixed.. parameters for subcommand 
+subcommand()
+{
+    local script_dir="${1}"
+    local subcmd="${2}"
+
+    ## exec subcommand
+    local cmd="${script_dir}/${subcmd}"
+    [ -x "${cmd}" ] \
+        && { "${cmd}" "${@:3}"; return $?; }
+
+    ## display usage
+cat <<_USAGE
+Usage:
+    Please set subcommand.
+
+    subcommands:
+$(
+        for file in $(find ${script_dir} -maxdepth 1 -type f -executable -not -name '.*')
+        do
+            local name=$(basename "${file}")
+cat <<EOS
+        ${name} ... $(sed -ne '/^# *@(#)/{ s/^# *@(#) *//; p }' ${file})
+EOS
+        done
+)
+_USAGE
+}
