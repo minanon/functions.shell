@@ -664,9 +664,6 @@ question(){
         cnt=$(( $cnt + 1 ))
     done
 
-    to_lower(){
-        echo "${1}" | tr "[:upper:]" "[:lower:]"
-    }
     set_to_var(){
         ${lower_case} \
             && eval "${var_name}='$( to_lower "${1}")'"\
@@ -690,6 +687,24 @@ question(){
         [ "${reg}" ] && bash -c "[[ '${answer}' =~ ${reg} ]]" \
             && { set_to_var "${answer}"; break; }
     done
+}
+
+##
+# text to lower case
+#
+# param string text
+# return lower strings
+to_lower(){
+    echo "${1}" | tr "[:upper:]" "[:lower:]"
+}
+
+##
+# text to upper case
+#
+# param string text
+# return upper strings
+to_upper(){
+    echo "${1}" | tr "[:lower:]" "[:upper:]"
 }
 
 ##
