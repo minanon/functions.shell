@@ -721,7 +721,7 @@ subcommand()
 
     ## exec subcommand
     local cmd="${script_dir}/${subcmd}"
-    [ -x "${cmd}" ] \
+    [ -f "${cmd}" ] && [ -x "${cmd}" ] \
         && { "${cmd}" "${@:3}"; return $?; }
 
     ## display usage
